@@ -27,6 +27,8 @@ namespace Twilio
 		/// Comparison type for start time
 		/// </summary>
 		public ComparisonType StartTimeComparison { get; set; }
+        
+        public DateTimeRange StartTimeRange { get; set; }
 		/// <summary>
 		/// Only show calls that ended on this date
 		/// </summary>
@@ -38,6 +40,8 @@ namespace Twilio
 		/// <summary>
 		/// What page number to start retrieving results from
 		/// </summary>
+        public DateTimeRange EndTimeRange { get; set; }
+
 		public int? PageNumber { get; set; }
 		/// <summary>
 		/// How many results to retrieve

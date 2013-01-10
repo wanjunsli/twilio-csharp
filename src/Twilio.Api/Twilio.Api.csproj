@@ -140,6 +140,7 @@
     <Compile Include="Model\ConnectApp.cs" />
     <Compile Include="Model\ConnectAppResult.cs" />
     <Compile Include="Model\AuthorizedConnectAppResult.cs" />
+    <Compile Include="Model\DateTimeRange.cs" />
     <Compile Include="Model\DequeueStatus.cs" />
     <Compile Include="Model\OutgoingCallerIdOptions.cs" />
     <Compile Include="Model\Queue.cs" />
