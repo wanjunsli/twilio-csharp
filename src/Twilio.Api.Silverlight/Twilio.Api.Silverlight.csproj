@@ -143,6 +143,9 @@
     <Compile Include="..\Twilio.Api\Model\ConnectAppResult.cs">
       <Link>Model\ConnectAppResult.cs</Link>
     </Compile>
+    <Compile Include="..\Twilio.Api\Model\DateTimeRange.cs">
+      <Link>Model\DateTimeRange.cs</Link>
+    </Compile>
     <Compile Include="..\Twilio.Api\Model\DeleteStatus.cs">
       <Link>Model\DeleteStatus.cs</Link>
     </Compile>

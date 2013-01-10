@@ -4,6 +4,8 @@ using System.Reflection;
 using RestSharp.Deserializers;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using System.Collections.Generic;
+using System;
 
 namespace Twilio
 {

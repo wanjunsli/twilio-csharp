@@ -10,31 +10,51 @@ namespace Twilio
 		/// Returns a list of Recordings, each representing a recording generated during the course of a phone call. The list includes paging information.
 		/// </summary>
 		/// <param name="callback">Method to call upon successful completion</param>
-		public void ListRecordings(Action<RecordingResult> callback)
-		{
-			ListRecordings(null, null, null, null, callback);
-		}
+        public void ListRecordings(Action<RecordingResult> callback)
+        {
+            ListRecordings(null, new DateTimeRange(), null, null, callback);
+        }
 
-		/// <summary>
-		/// Returns a filtered list of Recordings, each representing a recording generated during the course of a phone call. The list includes paging information.
-		/// </summary>
-		/// <param name="callSid">(Optional) The CallSid to retrieve recordings for</param>
-		/// <param name="dateCreated">(Optional) The date the recording was created (GMT)</param>
-		/// <param name="pageNumber">The page to start retrieving results from</param>
-		/// <param name="count">How many results to retrieve</param>
-		/// <param name="callback">Method to call upon successful completion</param>
-		public void ListRecordings(string callSid, DateTime? dateCreated, int? pageNumber, int? count, Action<RecordingResult> callback)
-		{
-			var request = new RestRequest();
-			request.Resource = "Accounts/{AccountSid}/Recordings.json";
+        /// <summary>
+        /// Returns a filtered list of Recordings, each representing a recording generated during the course of a phone call. The list includes paging information.
+        /// </summary>
+        /// <param name="callSid">(Optional) The CallSid to retrieve recordings for</param>
+        /// <param name="dateCreated">(Optional) The date the recording was created (GMT)</param>
+        /// <param name="pageNumber">The page to start retrieving results from</param>
+        /// <param name="count">How many results to retrieve</param>
+        /// <param name="callback">Method to call upon successful completion</param>
+        public void ListRecordings(string callSid, DateTime? dateCreated, int? pageNumber, int? count, Action<RecordingResult> callback)
+        {
+            ListRecordings(callSid, new DateTimeRange(dateCreated, null), pageNumber, count, callback);
+        }
 
-			if (callSid.HasValue()) request.AddParameter("CallSid", callSid);
-			if (dateCreated.HasValue) request.AddParameter("DateCreated", dateCreated.Value.ToString("yyyy-MM-dd"));
-			if (pageNumber.HasValue) request.AddParameter("Page", pageNumber.Value);
-			if (count.HasValue) request.AddParameter("PageSize", count.Value);
+        /// <summary>
+        /// Returns a filtered list of Recordings, each representing a recording generated during the course of a phone call. The list includes paging information.
+        /// </summary>
+        /// <param name="callSid">(Optional) The CallSid to retrieve recordings for</param>
+        /// <param name="dateCreatedRange">(Optional) A range of dates the recording was created (GMT)</param>
+        /// <param name="pageNumber">The page to start retrieving results from</param>
+        /// <param name="count">How many results to retrieve</param>
+        /// <param name="callback">Method to call upon successful completion</param>
+        public void ListRecordings(string callSid, DateTimeRange dateCreatedRange, int? pageNumber, int? count, Action<RecordingResult> callback)
+        {
+            var request = new RestRequest();
+            request.Resource = "Accounts/{AccountSid}/Recordings.json";
 
-			ExecuteAsync<RecordingResult>(request, (response) => callback(response));
-		}
+            if (callSid.HasValue()) request.AddParameter("CallSid", callSid);
+            //if (dateCreated.HasValue) request.AddParameter("DateCreated", dateCreated.Value.ToString("yyyy-MM-dd"));
+
+            if (dateCreatedRange != null)
+            {
+                if (dateCreatedRange.Start.HasValue) request.AddParameter(GetParameterNameWithEquality(dateCreatedRange.StartComparison, "DateCreated"), dateCreatedRange.Start.Value.ToString("yyyy-MM-dd"));
+                if (dateCreatedRange.End.HasValue) request.AddParameter(GetParameterNameWithEquality(dateCreatedRange.EndComparison, "DateCreated"), dateCreatedRange.End.Value.ToString("yyyy-MM-dd"));
+            }
+
+            if (pageNumber.HasValue) request.AddParameter("Page", pageNumber.Value);
+            if (count.HasValue) request.AddParameter("PageSize", count.Value);
+
+            ExecuteAsync<RecordingResult>(request, (response) => callback(response));
+        }
 
 		/// <summary>
 		/// Retrieve the details for the specified recording instance

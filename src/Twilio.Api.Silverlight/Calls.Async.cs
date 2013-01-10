@@ -44,31 +44,30 @@ namespace Twilio
 //			if (options.StartTime.HasValue) request.AddParameter("StartTime", options.StartTime.Value.ToString("yyyy-MM-dd"));
 //			if (options.EndTime.HasValue) request.AddParameter("EndTime", options.EndTime.Value.ToString("yyyy-MM-dd"));
 
-            var startTimeParameterName = GetParameterNameWithEquality(options.StartTimeComparison, "StartTime");
-            var endTimeParameterName = GetParameterNameWithEquality(options.EndTimeComparison, "EndTime");
-
-            if (options.StartTime.HasValue) request.AddParameter(startTimeParameterName, options.StartTime.Value.ToString("yyyy-MM-dd"));
-            if (options.EndTime.HasValue) request.AddParameter(endTimeParameterName, options.EndTime.Value.ToString("yyyy-MM-dd"));
-
             if (options.StartTimeRange != null)
             {
-                Predicate<Parameter> match = p => p.Name == "StartTime";
-                request.Parameters.RemoveAll(match);
-
                 DateTimeRange range = options.StartTimeRange;
                 if (range.Start.HasValue) request.AddParameter(GetParameterNameWithEquality(range.StartComparison, "StartTime"), range.Start.Value.ToString("yyyy-MM-dd"));
                 if (range.End.HasValue) request.AddParameter(GetParameterNameWithEquality(range.EndComparison, "StartTime"), range.End.Value.ToString("yyyy-MM-dd"));
             }
+            else if (options.StartTime.HasValue)
+            {
+                var startTimeParameterName = GetParameterNameWithEquality(options.StartTimeComparison, "StartTime");
+                request.AddParameter(startTimeParameterName, options.StartTime.Value.ToString("yyyy-MM-dd"));
+            }
 
             if (options.EndTimeRange != null)
             {
-                Predicate<Parameter> match = p => p.Name == "EndTime";
-                request.Parameters.RemoveAll(match);
-
                 DateTimeRange range = options.EndTimeRange;
                 if (range.Start.HasValue) request.AddParameter(GetParameterNameWithEquality(range.StartComparison, "EndTime"), range.Start.Value.ToString("yyyy-MM-dd"));
                 if (range.End.HasValue) request.AddParameter(GetParameterNameWithEquality(range.EndComparison, "EndTime"), range.End.Value.ToString("yyyy-MM-dd"));
             }
+            else if (options.EndTime.HasValue)
+            {
+                var endTimeParameterName = GetParameterNameWithEquality(options.EndTimeComparison, "EndTime");
+                request.AddParameter(endTimeParameterName, options.EndTime.Value.ToString("yyyy-MM-dd"));
+            }
+
 			if (options.Count.HasValue) request.AddParameter("PageSize", options.Count.Value);
 			if (options.PageNumber.HasValue) request.AddParameter("Page", options.PageNumber.Value);
 
