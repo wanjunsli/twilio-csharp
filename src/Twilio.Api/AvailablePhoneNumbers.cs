@@ -29,13 +29,7 @@ namespace Twilio
 		/// <param name="isoCountryCode">Two-character ISO country code (US or CA)</param>
         public virtual AvailablePhoneNumberResult ListAvailableTollFreePhoneNumbers(string isoCountryCode)
 		{
-			Require.Argument("isoCountryCode", isoCountryCode);
-
-			var request = new RestRequest();
-			request.Resource = "Accounts/{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/TollFree.json";
-			request.AddUrlSegment("IsoCountryCode", isoCountryCode);
-
-			return Execute<AvailablePhoneNumberResult>(request);
+			return ListAvailableTollFreePhoneNumbers(isoCountryCode, null, null)
 		}
 
 		/// <summary>
@@ -45,14 +39,27 @@ namespace Twilio
 		/// <param name="contains">Value to use when filtering search. Accepts numbers or characters.</param>
         public virtual AvailablePhoneNumberResult ListAvailableTollFreePhoneNumbers(string isoCountryCode, string contains)
 		{
+			return ListAvailableTollFreePhoneNumbers(isoCountryCode, contains, null)
+		}
+
+		/// <summary>
+		/// Search available toll-free phone numbers.  Makes a GET request to the AvailablePhoneNumber List resource.
+		/// </summary>
+		/// <param name="isoCountryCode">Two-character ISO country code (US or CA)</param>
+		/// <param name="contains">Value to use when filtering search. Accepts numbers or characters.</param>
+		/// <param name="areaCode">Filter the list of phone numbers by area code (for example, 866 in the USA)</param>
+        public virtual AvailablePhoneNumberResult ListAvailableTollFreePhoneNumbers(string isoCountryCode, string contains, string areaCode)
+		{
 			Require.Argument("isoCountryCode", isoCountryCode);
 			Require.Argument("contains", contains);
+			Require.Argument("areaCode", areaCode);
 
 			var request = new RestRequest();
 			request.Resource = "Accounts/{AccountSid}/AvailablePhoneNumbers/{IsoCountryCode}/TollFree.json";
 			request.AddUrlSegment("IsoCountryCode", isoCountryCode);
 
 			request.AddParameter("Contains", contains);
+			request.AddParameter("AreaCode", areaCode);
 
 			return Execute<AvailablePhoneNumberResult>(request);
 		}
