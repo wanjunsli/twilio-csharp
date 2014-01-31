@@ -14,4 +14,4 @@ before_install:
 
 script:
  - xbuild 
- - .ci/nunit.sh Tests/bin/Debug/Tests.dll
+ - .ci/nunit.sh src/Twilio.Api.Tests.Integration
