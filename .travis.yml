@@ -1,0 +1,17 @@
+# Taken from http://stackoverflow.com/a/16751773/329700 
+
+language: objective-c
+
+env:
+ global:
+  - EnableNuGetPackageRestore=true 
+ matrix:
+  - MONO_VER="3.2.5"
+
+before_install:
+ - wget "http://download.xamarin.com/MonoFrameworkMDK/Macx86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
+ - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target /
+
+script:
+ - xbuild 
+ - .ci/nunit.sh Tests/bin/Debug/Tests.dll
