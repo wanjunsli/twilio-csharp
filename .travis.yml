@@ -13,6 +13,6 @@ before_install:
  - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
 
 script:
- - cd src/Twilio.Api && xbuild 
+ - cd src/Twilio.Api && xbuild /p:TargetFrameworkProfile=""
  - find . -name '*.dll'
  - .ci/nunit.sh src/Twilio.Api.Tests.Integration
