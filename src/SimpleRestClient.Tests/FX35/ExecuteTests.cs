@@ -71,7 +71,7 @@ namespace SimpleRestClient.Tests
 
             var request = new RestRequest();
 
-            var response = client.ExecuteAsync(request, r =>
+            client.ExecuteAsync(request, r =>
             {                
                 manualResetEvent.Set();
 
@@ -109,7 +109,7 @@ namespace SimpleRestClient.Tests
 
             var request = new RestRequest();
 
-            var response = client.ExecuteAsync(request, r =>
+            client.ExecuteAsync(request, r =>
             {
                 manualResetEvent.Set();
 
@@ -144,7 +144,7 @@ namespace SimpleRestClient.Tests
 
             var request = new RestRequest();
 
-            var response = client.ExecuteAsync(request, r =>
+            client.ExecuteAsync(request, r =>
             {
                 manualResetEvent.Set();
 

@@ -36,12 +36,33 @@ namespace SimpleRestClient.Tests
             SerializationInfo.AddValue("_ConnectionGroupName", null);
             SerializationInfo.AddValue("_Version", HttpVersion.Version11, typeof(Version));
             SerializationInfo.AddValue("_OriginUri", new Uri("http://example.com"), typeof(Uri));
+			SerializationInfo.AddValue("requestUri", new Uri("http://example.com"), typeof(Uri));
+			SerializationInfo.AddValue("actualUri", new Uri("http://example.com"), typeof(Uri));
+			SerializationInfo.AddValue("allowAutoRedirect", true);
+			SerializationInfo.AddValue("allowBuffering", false);
+			SerializationInfo.AddValue("certificates", null);
+			SerializationInfo.AddValue("connectionGroup", null);
+			SerializationInfo.AddValue("contentLength", 0);
+			SerializationInfo.AddValue("webHeaders", null);
+			SerializationInfo.AddValue("keepAlive", true);
+			SerializationInfo.AddValue("maxAutoRedirect", 0);
+			SerializationInfo.AddValue("mediaType", "");
+			SerializationInfo.AddValue("method", "GET");
+			SerializationInfo.AddValue("initialMethod", "GET");
+			SerializationInfo.AddValue("pipelined", false);
+			SerializationInfo.AddValue("version", null, typeof(Version));
+			SerializationInfo.AddValue("proxy", null);
+			SerializationInfo.AddValue("sendChunked", false);
+			SerializationInfo.AddValue("timeout", 500);
+			SerializationInfo.AddValue("redirects", 0);
+			SerializationInfo.AddValue("host", "http://example.com");
         }
 
 #pragma warning disable 618
         public FakeHttpWebRequest()
             : base(SerializationInfo, new StreamingContext())
         {
+			this.Headers = new WebHeaderCollection();
             _requestStream = new MemoryStream();
         }
 
