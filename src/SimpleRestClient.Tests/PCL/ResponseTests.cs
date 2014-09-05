@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace SimpleRestClient.Tests.PCL
+namespace SimpleRestClient.Tests
 {
 
 #if PCL
@@ -18,11 +18,12 @@ namespace SimpleRestClient.Tests.PCL
         RestClient client;
         string BASE_URL = "http://example.com";
 
-        public ResponseTests()
-        {
-            client = new RestClient();
-            client.BaseUrl = BASE_URL;
-        }
+		[SetUp]
+		public void Setup()
+		{
+			client = new RestClient();
+			client.BaseUrl = BASE_URL;
+		}
 
         [Test]
         public async Task When_200OK_Response_Is_Returned_Then_Set_Proper_Response_Values()

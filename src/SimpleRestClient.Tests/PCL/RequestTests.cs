@@ -21,11 +21,12 @@ namespace SimpleRestClient.Tests
         RestClient client;
         string BASE_URL = "http://example.com";
 
-        public RequestTests()
-        {
-            client = new RestClient();
-            client.BaseUrl = BASE_URL;
-        }
+		[SetUp]
+		public void Setup()
+		{
+			client = new RestClient();
+			client.BaseUrl = BASE_URL;
+		}
 
         [Test]
         public void When_A_Default_Header_Is_Present_Then_RequestMessage_Includes_This_Header()
