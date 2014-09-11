@@ -91,6 +91,8 @@
     <Compile Include="Model\Domain.cs" />
     <Compile Include="Model\DomainOptions.cs" />
     <Compile Include="Model\DomainResult.cs" />
+    <Compile Include="Model\Feedback.cs" />
+    <Compile Include="Model\FeedbackSummary.cs" />
     <Compile Include="Model\HangupStyle.cs" />
     <Compile Include="Model\IncomingPhoneNumber.cs" />
     <Compile Include="Model\IncomingPhoneNumberResult.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Model\IpAccessControlListResult.cs" />
     <Compile Include="Model\IpAddress.cs" />
     <Compile Include="Model\IpAddressResult.cs" />
+    <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\Media.cs" />
     <Compile Include="Model\MediaListRequest.cs" />
     <Compile Include="Model\MediaResult.cs" />

@@ -78,9 +78,9 @@ copy src\Twilio.Api.Pcl\bin\PCL\Twilio.Api.* "download\package\twilio\lib\portab
 REM Create Packages
 REM mkdir Build
 
-REM FOR /F "tokens=* delims=" %%x in (src/version.txt) DO SET ver=%%x
-REM cmd /c %nuget% pack "Twilio.nuspec" -Version %ver%.%BuildCounter%-alpha -BasePath download\package\twilio -o download
-REM if not "%errorlevel%"=="0" goto failure
+FOR /F "tokens=* delims=" %%x in (src/version.txt) DO SET ver=%%x
+cmd /c %nuget% pack "Twilio.nuspec" -Version %ver%.%BuildCounter%-alpha -BasePath download\package\twilio -o download
+if not "%errorlevel%"=="0" goto failure
 
 :success
 

@@ -102,6 +102,10 @@
     <Compile Include="ConnectApps.cs" />
     <Compile Include="Core.Async.cs" />
     <Compile Include="Core.cs" />
+    <Compile Include="Feedback.Async.cs" />
+    <Compile Include="Feedback.cs" />
+    <Compile Include="FeedbackSummary.Async.cs" />
+    <Compile Include="FeedbackSummary.cs" />
     <Compile Include="IncomingPhoneNumbers.Async.cs" />
     <Compile Include="IncomingPhoneNumbers.cs" />
     <Compile Include="Media.Async.cs" />

@@ -66,6 +66,7 @@
     <Compile Include="..\Twilio.Api.Shared\Options.cs">
       <Link>%(FileName)</Link>
     </Compile>
+    <Compile Include="Feedback.Await.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Sip.Await.cs" />
     <Compile Include="Sms.Await.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Usage.Await.cs" />
     <None Include="app.config" />
     <Compile Include="Core.Await.cs" />
+    <Compile Include="FeedbackSummary.Await.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
