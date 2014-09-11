@@ -11,6 +11,7 @@ namespace SimpleRestClient.Tests
 {
     public class FakeHttpWebResponse : HttpWebResponse
     {
+		private readonly WebHeaderCollection _headers;
         private static SerializationInfo SerializationInfo;
         private readonly MemoryStream _responseStream;
 
@@ -25,15 +26,18 @@ namespace SimpleRestClient.Tests
             //StreamingContext sc = new StreamingContext();
             WebHeaderCollection headers = new WebHeaderCollection();
             SerializationInfo.AddValue("m_HttpResponseHeaders", headers);
-            SerializationInfo.AddValue("m_Uri", new Uri("http://example.com"));
+            SerializationInfo.AddValue("uri", new Uri("http://example.com"));
             SerializationInfo.AddValue("m_Certificate", null);
-            SerializationInfo.AddValue("m_Version", HttpVersion.Version11);
-            SerializationInfo.AddValue("m_StatusCode", status);
-            SerializationInfo.AddValue("m_ContentLength", contentLength);
+            SerializationInfo.AddValue("version", HttpVersion.Version11);
+            SerializationInfo.AddValue("statusCode", status);
+            SerializationInfo.AddValue("contentLength", contentLength);
+			SerializationInfo.AddValue("contentType", "");
+			SerializationInfo.AddValue("method", "GET");
             SerializationInfo.AddValue("m_Verb", "GET");
-            SerializationInfo.AddValue("m_StatusDescription", statusDescription);
+            SerializationInfo.AddValue("statusDescription", statusDescription);
             SerializationInfo.AddValue("m_MediaType", null);
             SerializationInfo.AddValue("m_ConnectStream", null, typeof(Stream));
+			SerializationInfo.AddValue("cookieCollection", null, typeof(CookieCollection));
         }
 
 #pragma warning disable 618
@@ -47,12 +51,20 @@ namespace SimpleRestClient.Tests
         public FakeHttpWebResponse(Stream response)
             : this()
         {
+			_headers = new WebHeaderCollection();
             _responseStream = (MemoryStream)response;
+
         }
 
         public override Stream GetResponseStream()
         {
             return this._responseStream;
         }
+
+		public override WebHeaderCollection Headers {
+			get {
+				return this._headers;
+			}
+		}
     }
 }
