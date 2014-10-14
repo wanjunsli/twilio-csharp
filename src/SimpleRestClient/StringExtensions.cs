@@ -192,6 +192,7 @@ namespace Simple
                 "yyyy-MM-dd HH:mm:ssZ", 
                 "yyyy-MM-ddTHH:mm:ss", 
                 "yyyy-MM-ddTHH:mm:sszzzzzz",
+                "yyyy-MM-ddTHH:mm:ss.FFFK",
                 "M/d/yyyy h:mm:ss tt" // default format for invariant culture
             };
 

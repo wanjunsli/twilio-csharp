@@ -25,7 +25,7 @@ using NUnit.Framework;
 
 namespace SimpleRestClient.Tests
 {
-	[TestFixture]
+    [TestFixture]
     public class JsonDeserializerTests
     {
         private const string AlternativeCulture = "pt-PT";
@@ -50,7 +50,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\jsonlists.txt")]
         public void Can_Deserialize_Lists_of_Simple_Types()
         {
-			var doc = File.ReadAllText("Resources/Data/jsonlists.txt");
+            var doc = File.ReadAllText("Resources/Data/jsonlists.txt");
             var json = new JsonDeserializer();
 
             var output = json.Deserialize<JsonLists>(new RestResponse { Content = doc });
@@ -79,7 +79,7 @@ namespace SimpleRestClient.Tests
             var output = json.Deserialize<List<string>>(new RestResponse { Content = content });
 
             MyAssert.NotEmpty(output);
-            Assert.AreEqual(null, output[2]);
+            Assert.AreEqual(null, output [2]);
             Assert.AreEqual(5, output.Count);
         }
 
@@ -109,7 +109,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\sojson.txt")]
         public void Can_Deserialize_From_Root_Element()
         {
-			var doc = File.ReadAllText("Resources/Data/sojson.txt");
+            var doc = File.ReadAllText("Resources/Data/sojson.txt");
 
             var json = new JsonDeserializer();
             json.RootElement = "User";
@@ -122,11 +122,11 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\GenericWithList.txt")]
         public void Can_Deserialize_Generic_Members()
         {
-			var doc = File.ReadAllText("Resources/Data/GenericWithList.txt");
+            var doc = File.ReadAllText("Resources/Data/GenericWithList.txt");
             var json = new JsonDeserializer();
 
             var output = json.Deserialize<Generic<GenericWithList<Foe>>>(new RestResponse { Content = doc });
-            Assert.AreEqual("Foe sho", output.Data.Items[0].Nickname);
+            Assert.AreEqual("Foe sho", output.Data.Items [0].Nickname);
         }
 
         [Test]
@@ -135,15 +135,15 @@ namespace SimpleRestClient.Tests
             Guid ID1 = new Guid("b0e5c11f-e944-478c-aadd-753b956d0c8c");
             Guid ID2 = new Guid("809399fa-21c4-4dca-8dcd-34cb697fbca0");
             var data = new JsonObject();
-            data["Ids"] = new JsonArray() { ID1, ID2 };
+            data ["Ids"] = new JsonArray() { ID1, ID2 };
 
             var d = new JsonDeserializer();
             var response = new RestResponse { Content = data.ToString() };
             var p = d.Deserialize<GuidList>(response);
 
             Assert.AreEqual(2, p.Ids.Count);
-            Assert.AreEqual(ID1, p.Ids[0]);
-            Assert.AreEqual(ID2, p.Ids[1]);
+            Assert.AreEqual(ID1, p.Ids [0]);
+            Assert.AreEqual(ID2, p.Ids [1]);
         }
 
         [Test]
@@ -152,15 +152,15 @@ namespace SimpleRestClient.Tests
             DateTime Item1 = new DateTime(2010, 2, 8, 11, 11, 11);
             DateTime Item2 = Item1.AddSeconds(12345);
             var data = new JsonObject();
-            data["Items"] = new JsonArray { Item1.ToString("u"), Item2.ToString("u") };
+            data ["Items"] = new JsonArray { Item1.ToString("u"), Item2.ToString("u") };
 
             var d = new JsonDeserializer();
             var response = new RestResponse { Content = data.ToString() };
             var p = d.Deserialize<GenericWithList<DateTime>>(response);
 
             Assert.AreEqual(2, p.Items.Count);
-            Assert.AreEqual(Item1, p.Items[0]);
-            Assert.AreEqual(Item2, p.Items[1]);
+            Assert.AreEqual(Item1, p.Items [0]);
+            Assert.AreEqual(Item2, p.Items [1]);
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\jsonarray.txt")]
         public void Can_Deserialize_Root_Json_Array_To_List()
         {
-			var data = File.ReadAllText("Resources/Data/jsonarray.txt");
+            var data = File.ReadAllText("Resources/Data/jsonarray.txt");
             var response = new RestResponse { Content = data };
             var json = new JsonDeserializer();
             var output = json.Deserialize<List<status>>(response);
@@ -258,7 +258,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\jsonarray.txt")]
         public void Can_Deserialize_Root_Json_Array_To_Inherited_List()
         {
-			var data = File.ReadAllText("Resources/Data/jsonarray.txt");
+            var data = File.ReadAllText("Resources/Data/jsonarray.txt");
             var response = new RestResponse { Content = data };
             var json = new JsonDeserializer();
             var output = json.Deserialize<StatusList>(response);
@@ -269,7 +269,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\jsonenums.txt")]
         public void Can_Deserialize_Various_Enum_Values()
         {
-			var data = File.ReadAllText("Resources/Data/jsonenums.txt");
+            var data = File.ReadAllText("Resources/Data/jsonenums.txt");
             var response = new RestResponse { Content = data };
             var json = new JsonDeserializer();
             var output = json.Deserialize<JsonEnumsTestStructure>(response);
@@ -288,7 +288,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\jsonenumtypes.txt")]
         public void Can_Deserialize_Various_Enum_Types()
         {
-			var data = File.ReadAllText("Resources/Data/jsonenumtypes.txt");
+            var data = File.ReadAllText("Resources/Data/jsonenumtypes.txt");
             var response = new RestResponse { Content = data };
             var json = new JsonDeserializer();
             var output = json.Deserialize<JsonEnumTypesTestStructure>(response);
@@ -317,7 +317,7 @@ namespace SimpleRestClient.Tests
         public void Can_Deserialize_Guid_String_Fields()
         {
             var doc = new JsonObject();
-            doc["Guid"] = GuidString;
+            doc ["Guid"] = GuidString;
 
             var d = new JsonDeserializer();
             var response = new RestResponse { Content = doc.ToString() };
@@ -330,7 +330,7 @@ namespace SimpleRestClient.Tests
         public void Can_Deserialize_Quoted_Primitive()
         {
             var doc = new JsonObject();
-            doc["Age"] = "28";
+            doc ["Age"] = "28";
 
             var d = new JsonDeserializer();
             var response = new RestResponse { Content = doc.ToString() };
@@ -343,7 +343,7 @@ namespace SimpleRestClient.Tests
         public void Can_Deserialize_Int_to_Bool()
         {
             var doc = new JsonObject();
-            doc["IsCool"] = 1;
+            doc ["IsCool"] = 1;
 
             var d = new JsonDeserializer();
             var response = new RestResponse { Content = doc.ToString() };
@@ -383,15 +383,14 @@ namespace SimpleRestClient.Tests
             Assert.AreEqual(1952, p.BestFriend.Since);
 
             MyAssert.NotEmpty(p.Foes);
-            Assert.AreEqual("Foe 1", p.Foes["dict1"].Nickname);
-            Assert.AreEqual("Foe 2", p.Foes["dict2"].Nickname);
+            Assert.AreEqual("Foe 1", p.Foes ["dict1"].Nickname);
+            Assert.AreEqual("Foe 2", p.Foes ["dict2"].Nickname);
         }
 
         [Test]
         public void Can_Deserialize_With_Default_Root_Alternative_Culture()
         {
-            using (new CultureChange(AlternativeCulture))
-            {
+            using (new CultureChange(AlternativeCulture)) {
                 Can_Deserialize_With_Default_Root();
             }
         }
@@ -400,7 +399,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\underscore_prefix.txt")]
         public void Can_Deserialize_Names_With_Underscore_Prefix()
         {
-			var data = File.ReadAllText("Resources/Data/underscore_prefix.txt");
+            var data = File.ReadAllText("Resources/Data/underscore_prefix.txt");
             var response = new RestResponse { Content = data };
             var json = new JsonDeserializer();
             json.RootElement = "User";
@@ -436,15 +435,14 @@ namespace SimpleRestClient.Tests
             Assert.AreEqual(1952, p.BestFriend.Since);
 
             MyAssert.NotEmpty(p.Foes);
-            Assert.AreEqual("Foe 1", p.Foes["dict1"].Nickname);
-            Assert.AreEqual("Foe 2", p.Foes["dict2"].Nickname);
+            Assert.AreEqual("Foe 1", p.Foes ["dict1"].Nickname);
+            Assert.AreEqual("Foe 2", p.Foes ["dict2"].Nickname);
         }
 
         [Test]
         public void Can_Deserialize_Names_With_Underscores_With_Default_Root_Alternative_Culture()
         {
-            using (new CultureChange(AlternativeCulture))
-            {
+            using (new CultureChange(AlternativeCulture)) {
                 Can_Deserialize_Names_With_Underscores_With_Default_Root();
             }
         }
@@ -474,15 +472,14 @@ namespace SimpleRestClient.Tests
             Assert.AreEqual(1952, p.BestFriend.Since);
 
             MyAssert.NotEmpty(p.Foes);
-            Assert.AreEqual("Foe 1", p.Foes["dict1"].Nickname);
-            Assert.AreEqual("Foe 2", p.Foes["dict2"].Nickname);
+            Assert.AreEqual("Foe 1", p.Foes ["dict1"].Nickname);
+            Assert.AreEqual("Foe 2", p.Foes ["dict2"].Nickname);
         }
 
         [Test]
         public void Can_Deserialize_Names_With_Dashes_With_Default_Root_Alternative_Culture()
         {
-            using (new CultureChange(AlternativeCulture))
-            {
+            using (new CultureChange(AlternativeCulture)) {
                 Can_Deserialize_Names_With_Dashes_With_Default_Root();
             }
         }
@@ -513,7 +510,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\timespans.txt")]
         public void Can_Deserialize_TimeSpan()
         {
-			var payload = GetPayLoad<TimeSpanTestStructure>("Resources/Data/timespans.txt");
+            var payload = GetPayLoad<TimeSpanTestStructure>("Resources/Data/timespans.txt");
 
             Assert.AreEqual(new TimeSpan(468006), payload.Tick);
             Assert.AreEqual(new TimeSpan(0, 0, 0, 0, 125), payload.Millisecond);
@@ -551,7 +548,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\person.json.txt")]
         public void Can_Deserialize_JsonNet_Dates()
         {
-			var person = GetPayLoad<PersonForJson>("Resources/Data/person.json.txt");
+            var person = GetPayLoad<PersonForJson>("Resources/Data/person.json.txt");
 
             Assert.AreEqual(
                 new DateTime(2011, 6, 30, 8, 15, 46, 929, DateTimeKind.Utc),
@@ -562,7 +559,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\datetimes.txt")]
         public void Can_Deserialize_DateTime()
         {
-			var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
+            var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
 
             Assert.AreEqual(
                 new DateTime(2011, 6, 30, 8, 15, 46, 929, DateTimeKind.Utc),
@@ -573,7 +570,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\datetimes.txt")]
         public void Can_Deserialize_Nullable_DateTime_With_Value()
         {
-			var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
+            var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
 
             Assert.IsNotNull(payload.NullableDateTimeWithValue);
             Assert.AreEqual(
@@ -585,7 +582,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\datetimes.txt")]
         public void Can_Deserialize_Nullable_DateTime_With_Null()
         {
-			var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
+            var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
 
             Assert.IsNull(payload.NullableDateTimeWithNull);
         }
@@ -594,18 +591,18 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\datetimes.txt")]
         public void Can_Deserialize_DateTimeOffset()
         {
-			var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
+            var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
 
             Assert.AreEqual(
                 new DateTime(2011, 6, 30, 8, 15, 46, 929, DateTimeKind.Utc),
-                payload.DateTimeOffset);
+                payload.DateTimeOffset.DateTime);
         }
 
         [Test]
         //[DeploymentItem(@"Resources\Data\iso8601datetimes.txt")]
         public void Can_Deserialize_Iso8601DateTimeLocal()
         {
-			var payload = GetPayLoad<Iso8601DateTimeTestStructure>("Resources/Data/iso8601datetimes.txt");
+            var payload = GetPayLoad<Iso8601DateTimeTestStructure>("Resources/Data/iso8601datetimes.txt");
 
             Assert.AreEqual(
                 new DateTime(2012, 7, 19, 10, 23, 25, DateTimeKind.Utc),
@@ -616,7 +613,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\iso8601datetimes.txt")]
         public void Can_Deserialize_Iso8601DateTimeZulu()
         {
-			var payload = GetPayLoad<Iso8601DateTimeTestStructure>("Resources/Data/iso8601datetimes.txt");
+            var payload = GetPayLoad<Iso8601DateTimeTestStructure>("Resources/Data/iso8601datetimes.txt");
 
             Assert.AreEqual(
                 new DateTime(2012, 7, 19, 10, 23, 25, 544, DateTimeKind.Utc),
@@ -627,7 +624,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\iso8601datetimes.txt")]
         public void Can_Deserialize_Iso8601DateTimeWithOffset()
         {
-			var payload = GetPayLoad<Iso8601DateTimeTestStructure>("Resources/Data/iso8601datetimes.txt");
+            var payload = GetPayLoad<Iso8601DateTimeTestStructure>("Resources/Data/iso8601datetimes.txt");
 
             Assert.AreEqual(
                 new DateTime(2012, 7, 19, 10, 23, 25, 544, DateTimeKind.Utc),
@@ -638,19 +635,18 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\datetimes.txt")]
         public void Can_Deserialize_Nullable_DateTimeOffset_With_Value()
         {
-			var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
+            var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
 
             Assert.IsNotNull(payload.NullableDateTimeOffsetWithValue);
-            Assert.AreEqual(
-                new DateTime(2011, 6, 30, 8, 15, 46, 929, DateTimeKind.Utc),
-                payload.NullableDateTimeOffsetWithValue);
+            Assert.AreEqual(new DateTime(2011, 6, 30, 8, 15, 46, 929, DateTimeKind.Utc),
+                payload.NullableDateTimeOffsetWithValue.Value.DateTime);
         }
 
         [Test]
         //[DeploymentItem(@"Resources\Data\datetimes.txt")]
         public void Can_Deserialize_Nullable_DateTimeOffset_With_Null()
         {
-			var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
+            var payload = GetPayLoad<DateTimeTestStructure>("Resources/Data/datetimes.txt");
 
             Assert.IsNull(payload.NullableDateTimeOffsetWithNull);
         }
@@ -663,10 +659,10 @@ namespace SimpleRestClient.Tests
             var response = new RestResponse { Content = doc };
             var bd = d.Deserialize<Dictionary<string, string>>(response);
 
-            Assert.AreEqual(bd["Thing1"], "Thing1");
-            Assert.AreEqual(bd["Thing2"], "Thing2");
-            Assert.AreEqual(bd["ThingRed"], "ThingRed");
-            Assert.AreEqual(bd["ThingBlue"], "ThingBlue");
+            Assert.AreEqual(bd ["Thing1"], "Thing1");
+            Assert.AreEqual(bd ["Thing2"], "Thing2");
+            Assert.AreEqual(bd ["ThingRed"], "ThingRed");
+            Assert.AreEqual(bd ["ThingBlue"], "ThingBlue");
         }
 
         [Test]
@@ -677,10 +673,10 @@ namespace SimpleRestClient.Tests
             var response = new RestResponse { Content = doc };
             var bd = d.Deserialize<Dictionary<string, string>>(response);
 
-            Assert.AreEqual("[\"Value1\",\"Value2\"]", bd["Thing1"]);
-            Assert.AreEqual("Thing2", bd["Thing2"]);
-            Assert.AreEqual("{\"Name\":\"ThingRed\",\"Color\":\"Red\"}", bd["ThingRed"]);
-            Assert.AreEqual("{\"Name\":\"ThingBlue\",\"Color\":\"Blue\"}", bd["ThingBlue"]);
+            Assert.AreEqual("[\"Value1\",\"Value2\"]", bd ["Thing1"]);
+            Assert.AreEqual("Thing2", bd ["Thing2"]);
+            Assert.AreEqual("{\"Name\":\"ThingRed\",\"Color\":\"Red\"}", bd ["ThingRed"]);
+            Assert.AreEqual("{\"Name\":\"ThingBlue\",\"Color\":\"Blue\"}", bd ["ThingBlue"]);
         }
 
         [Test]
@@ -698,7 +694,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\objectproperty.txt")]
         public void Can_Deserialize_Object_Type_Property_With_Primitive_Vale()
         {
-			var payload = GetPayLoad<ObjectProperties>("Resources/Data/objectproperty.txt");
+            var payload = GetPayLoad<ObjectProperties>("Resources/Data/objectproperty.txt");
 
             Assert.AreEqual(42L, payload.ObjectProperty);
         }
@@ -707,7 +703,7 @@ namespace SimpleRestClient.Tests
         //[DeploymentItem(@"Resources\Data\jsondictionary.txt")]
         public void Can_Deserialize_Dictionary_of_Lists()
         {
-			var doc = File.ReadAllText("Resources/Data/jsondictionary.txt");
+            var doc = File.ReadAllText("Resources/Data/jsondictionary.txt");
 
             var json = new JsonDeserializer();
             json.RootElement = "response";
@@ -722,40 +718,39 @@ namespace SimpleRestClient.Tests
         private string CreateJsonWithUnderscores()
         {
             var doc = new JsonObject();
-            doc["name"] = "John Sheehan";
-            doc["start_date"] = new DateTime(2009, 9, 25, 0, 6, 1, DateTimeKind.Utc);
-            doc["age"] = 28;
-            doc["percent"] = 99.9999m;
-            doc["big_number"] = long.MaxValue;
-            doc["is_cool"] = false;
-            doc["ignore"] = "dummy";
-            doc["read_only"] = "dummy";
-            doc["url"] = "http://example.com";
-            doc["url_path"] = "/foo/bar";
+            doc ["name"] = "John Sheehan";
+            doc ["start_date"] = new DateTime(2009, 9, 25, 0, 6, 1, DateTimeKind.Utc);
+            doc ["age"] = 28;
+            doc ["percent"] = 99.9999m;
+            doc ["big_number"] = long.MaxValue;
+            doc ["is_cool"] = false;
+            doc ["ignore"] = "dummy";
+            doc ["read_only"] = "dummy";
+            doc ["url"] = "http://example.com";
+            doc ["url_path"] = "/foo/bar";
 
 
-            doc["best_friend"] = new JsonObject { 
-									{"name", "The Fonz"},
-									{"since", 1952}
-								};
+            doc ["best_friend"] = new JsonObject { 
+                { "name", "The Fonz" },
+                { "since", 1952 }
+            };
 
             var friendsArray = new JsonArray();
-            for (int i = 0; i < 10; i++)
-            {
+            for (int i = 0; i < 10; i++) {
                 friendsArray.Add(new JsonObject {
-									{"name", "Friend" + i},
-									{"since", DateTime.Now.Year - i}
-								});
+                    { "name", "Friend" + i },
+                    { "since", DateTime.Now.Year - i }
+                });
             }
 
-            doc["friends"] = friendsArray;
+            doc ["friends"] = friendsArray;
 
-            var foesArray = new JsonObject{
-								{"dict1", new JsonObject{{"nickname", "Foe 1"}}},
-								{"dict2", new JsonObject{{"nickname", "Foe 2"}}}
-							};
+            var foesArray = new JsonObject {
+                { "dict1", new JsonObject{ { "nickname", "Foe 1" } } },
+                { "dict2", new JsonObject{ { "nickname", "Foe 2" } } }
+            };
 
-            doc["foes"] = foesArray;
+            doc ["foes"] = foesArray;
 
             return doc.ToString();
         }
@@ -763,39 +758,38 @@ namespace SimpleRestClient.Tests
         private string CreateJsonWithDashes()
         {
             var doc = new JsonObject();
-            doc["name"] = "John Sheehan";
-            doc["start-date"] = new DateTime(2009, 9, 25, 0, 6, 1, DateTimeKind.Utc);
-            doc["age"] = 28;
-            doc["percent"] = 99.9999m;
-            doc["big-number"] = long.MaxValue;
-            doc["is-cool"] = false;
-            doc["ignore"] = "dummy";
-            doc["read-only"] = "dummy";
-            doc["url"] = "http://example.com";
-            doc["url-path"] = "/foo/bar";
+            doc ["name"] = "John Sheehan";
+            doc ["start-date"] = new DateTime(2009, 9, 25, 0, 6, 1, DateTimeKind.Utc);
+            doc ["age"] = 28;
+            doc ["percent"] = 99.9999m;
+            doc ["big-number"] = long.MaxValue;
+            doc ["is-cool"] = false;
+            doc ["ignore"] = "dummy";
+            doc ["read-only"] = "dummy";
+            doc ["url"] = "http://example.com";
+            doc ["url-path"] = "/foo/bar";
 
-            doc["best-friend"] = new JsonObject{
-									{"name", "The Fonz"},
-									{"since", 1952}
-								};
+            doc ["best-friend"] = new JsonObject {
+                { "name", "The Fonz" },
+                { "since", 1952 }
+            };
 
             var friendsArray = new JsonArray();
-            for (int i = 0; i < 10; i++)
-            {
-                friendsArray.Add(new JsonObject{
-									{"name", "Friend" + i},
-									{"since", DateTime.Now.Year - i}
-								});
+            for (int i = 0; i < 10; i++) {
+                friendsArray.Add(new JsonObject {
+                    { "name", "Friend" + i },
+                    { "since", DateTime.Now.Year - i }
+                });
             }
 
-            doc["friends"] = friendsArray;
+            doc ["friends"] = friendsArray;
 
-            var foesArray = new JsonObject{
-								{"dict1", new JsonObject{{"nickname", "Foe 1"}}},
-								{"dict2", new JsonObject{{"nickname", "Foe 2"}}}
-							};
+            var foesArray = new JsonObject {
+                { "dict1", new JsonObject{ { "nickname", "Foe 1" } } },
+                { "dict2", new JsonObject{ { "nickname", "Foe 2" } } }
+            };
 
-            doc["foes"] = foesArray;
+            doc ["foes"] = foesArray;
 
             return doc.ToString();
         }
@@ -811,7 +805,7 @@ namespace SimpleRestClient.Tests
         private string CreateUnixDateJson()
         {
             var doc = new JsonObject();
-            doc["Value"] = 1309421746;
+            doc ["Value"] = 1309421746;
 
             return doc.ToString();
         }
@@ -819,44 +813,43 @@ namespace SimpleRestClient.Tests
         private string CreateJson()
         {
             var doc = new JsonObject();
-            doc["Name"] = "John Sheehan";
-            doc["StartDate"] = new DateTime(2009, 9, 25, 0, 6, 1, DateTimeKind.Utc);
-            doc["Age"] = 28;
-            doc["Percent"] = 99.9999m;
-            doc["BigNumber"] = long.MaxValue;
-            doc["IsCool"] = false;
-            doc["Ignore"] = "dummy";
-            doc["ReadOnly"] = "dummy";
-            doc["Url"] = "http://example.com";
-            doc["UrlPath"] = "/foo/bar";
-            doc["Order"] = "third";
-            doc["Disposition"] = "so_so";
+            doc ["Name"] = "John Sheehan";
+            doc ["StartDate"] = new DateTime(2009, 9, 25, 0, 6, 1, DateTimeKind.Utc);
+            doc ["Age"] = 28;
+            doc ["Percent"] = 99.9999m;
+            doc ["BigNumber"] = long.MaxValue;
+            doc ["IsCool"] = false;
+            doc ["Ignore"] = "dummy";
+            doc ["ReadOnly"] = "dummy";
+            doc ["Url"] = "http://example.com";
+            doc ["UrlPath"] = "/foo/bar";
+            doc ["Order"] = "third";
+            doc ["Disposition"] = "so_so";
 
-            doc["Guid"] = new Guid(GuidString).ToString();
-            doc["EmptyGuid"] = "";
+            doc ["Guid"] = new Guid(GuidString).ToString();
+            doc ["EmptyGuid"] = "";
 
-            doc["BestFriend"] = new JsonObject{
-									{"Name", "The Fonz"},
-									{"Since", 1952}
-								};
+            doc ["BestFriend"] = new JsonObject {
+                { "Name", "The Fonz" },
+                { "Since", 1952 }
+            };
 
             var friendsArray = new JsonArray();
-            for (int i = 0; i < 10; i++)
-            {
-                friendsArray.Add(new JsonObject{
-									{"Name", "Friend" + i},
-									{"Since", DateTime.Now.Year - i}
-								});
+            for (int i = 0; i < 10; i++) {
+                friendsArray.Add(new JsonObject {
+                    { "Name", "Friend" + i },
+                    { "Since", DateTime.Now.Year - i }
+                });
             }
 
-            doc["Friends"] = friendsArray;
+            doc ["Friends"] = friendsArray;
 
-            var foesArray = new JsonObject{
-								{"dict1", new JsonObject{{"Nickname", "Foe 1"}}},
-								{"dict2", new JsonObject{{"Nickname", "Foe 2"}}}
-							};
+            var foesArray = new JsonObject {
+                { "dict1", new JsonObject{ { "Nickname", "Foe 1" } } },
+                { "dict2", new JsonObject{ { "Nickname", "Foe 2" } } }
+            };
 
-            doc["Foes"] = foesArray;
+            doc ["Foes"] = foesArray;
 
             return doc.ToString();
         }
@@ -864,9 +857,9 @@ namespace SimpleRestClient.Tests
         private string CreateJsonWithNullValues()
         {
             var doc = new JsonObject();
-            doc["Id"] = null;
-            doc["StartDate"] = null;
-            doc["UniqueId"] = null;
+            doc ["Id"] = null;
+            doc ["StartDate"] = null;
+            doc ["UniqueId"] = null;
 
             return doc.ToString();
         }
@@ -874,9 +867,9 @@ namespace SimpleRestClient.Tests
         private string CreateJsonWithEmptyValues()
         {
             var doc = new JsonObject();
-            doc["Id"] = "";
-            doc["StartDate"] = "";
-            doc["UniqueId"] = "";
+            doc ["Id"] = "";
+            doc ["StartDate"] = "";
+            doc ["UniqueId"] = "";
 
             return doc.ToString();
         }
@@ -884,9 +877,9 @@ namespace SimpleRestClient.Tests
         private string CreateJsonWithoutEmptyValues()
         {
             var doc = new JsonObject();
-            doc["Id"] = 123;
-            doc["StartDate"] = new DateTime(2010, 2, 21, 9, 35, 00, DateTimeKind.Utc);
-            doc["UniqueId"] = new Guid(GuidString).ToString();
+            doc ["Id"] = 123;
+            doc ["StartDate"] = new DateTime(2010, 2, 21, 9, 35, 00, DateTimeKind.Utc);
+            doc ["UniqueId"] = new Guid(GuidString).ToString();
 
             return doc.ToString();
         }
@@ -894,20 +887,20 @@ namespace SimpleRestClient.Tests
         public string CreateJsonStringDictionary()
         {
             var doc = new JsonObject();
-            doc["Thing1"] = "Thing1";
-            doc["Thing2"] = "Thing2";
-            doc["ThingRed"] = "ThingRed";
-            doc["ThingBlue"] = "ThingBlue";
+            doc ["Thing1"] = "Thing1";
+            doc ["Thing2"] = "Thing2";
+            doc ["ThingRed"] = "ThingRed";
+            doc ["ThingBlue"] = "ThingBlue";
             return doc.ToString();
         }
 
         public string CreateDynamicJsonStringDictionary()
         {
             var doc = new JsonObject();
-            doc["Thing1"] = new JsonArray { "Value1", "Value2" };
-            doc["Thing2"] = "Thing2";
-            doc["ThingRed"] = new JsonObject { { "Name", "ThingRed" }, { "Color", "Red" } };
-            doc["ThingBlue"] = new JsonObject { { "Name", "ThingBlue" }, { "Color", "Blue" } };
+            doc ["Thing1"] = new JsonArray { "Value1", "Value2" };
+            doc ["Thing2"] = "Thing2";
+            doc ["ThingRed"] = new JsonObject { { "Name", "ThingRed" }, { "Color", "Red" } };
+            doc ["ThingBlue"] = new JsonObject { { "Name", "ThingBlue" }, { "Color", "Blue" } };
             return doc.ToString();
         }
 

@@ -100,6 +100,9 @@ namespace Simple
                 webrequest.Headers.Add(param.Name, param.Value.ToString());
             }
 
+            // Remove Headers from parameters
+            restrequest.Parameters.RemoveAll(p => p.Type == ParameterType.HttpHeader);
+
             if (restrequest.Method == "POST" || restrequest.Method == "PUT")
             {
                 webrequest.ContentType = "application/x-www-form-urlencoded";
