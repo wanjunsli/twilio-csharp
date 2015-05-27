@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -32,10 +34,10 @@ namespace Twilio.TwiML
 		/// <param name="urlOverride">The URL to use for validation, if different from Request.Url (sometimes needed if web site is behind a proxy or load-balancer)</param>
 		public bool IsValidRequest(HttpContext context, string authToken, string urlOverride)
 		{
-			if (context.Request.IsLocal)
-			{
-				return true;
-			}
+            if (context.Request.IsLocal)
+            {
+                return true;
+            }
 
 			// validate request
 			// http://www.twilio.com/docs/security-reliability/security
@@ -49,12 +51,12 @@ namespace Twilio.TwiML
 			if (context.Request.HttpMethod == "POST")
 			{
 				// Iterate through that sorted list of POST parameters, and append the variable name and value (with no delimiters) to the end of the URL string
-				var sortedKeys = context.Request.Form.AllKeys.OrderBy(k => k, StringComparer.Ordinal).ToList();
-				foreach (var key in sortedKeys)
-				{
-					value.Append(key);
-					value.Append(context.Request.Form[key]);
-				}
+                var sortedKeys = context.Request.UnvalidatedForm().AllKeys.OrderBy(k => k, StringComparer.Ordinal).ToList();
+                foreach (var key in sortedKeys)
+                {
+                    value.Append(key);
+                    value.Append(context.Request.UnvalidatedForm()[key]);
+                }
 			}
 
 			// Sign the resulting value with HMAC-SHA1 using your AuthToken as the key (remember, your AuthToken's case matters!).
@@ -70,4 +72,26 @@ namespace Twilio.TwiML
 			return sig == encoded;
 		}
 	}
+
+    public static class Extensions {
+
+        public static NameValueCollection UnvalidatedForm(this HttpRequest httpRequest)
+        {
+            Type httpRequestType = httpRequest.GetType();
+
+            // Get the internal _form field and initialize it to a new internal HttpValueCollection instance
+            var formField = httpRequestType.GetField("_form", BindingFlags.NonPublic | BindingFlags.Instance);
+            var httpValueCollection = Activator.CreateInstance(formField.FieldType, true);
+            formField.SetValue(httpRequest, httpValueCollection);
+
+            // Call the internal FillInFormCollection to populate the _form fields collection
+            var fillInFormCollectionMethod = httpRequestType.GetMethod("FillInFormCollection", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod);
+            fillInFormCollectionMethod.Invoke(httpRequest, null);
+
+            var nameValueCollection = (NameValueCollection)formField.GetValue(httpRequest);
+
+            return nameValueCollection;
+        }
+    
+    }
 }
