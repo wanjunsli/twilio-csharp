@@ -42,38 +42,59 @@ namespace Twilio
         /// <summary>
         /// List all subaccounts created for the authenticated account. Makes a GET request to the Account List resource.
         /// </summary>
+        /// <param name="friendlyName">Only return the Account resources with friendly names that exactly match this name</param>
         public virtual AccountResult ListSubAccounts(string friendlyName)
         {
-            return ListSubAccounts(friendlyName, null, null);
+            return ListSubAccounts(friendlyName, String.Empty);
         }
 
         /// <summary>
         /// List all subaccounts created for the authenticated account. Makes a GET request to the Account List resource.
         /// </summary>
-        public virtual AccountResult ListSubAccounts(int? pageNumber, int? count)
+        /// <param name="friendlyName">Only return the Account resources with friendly names that exactly match this name</param>
+        /// <param name="status">Only return Account resources with the given status. Can be closed, suspended or active</param>
+        public virtual AccountResult ListSubAccounts(string friendlyName, string status)
         {
-            return ListSubAccounts(String.Empty, pageNumber, count);
+            return ListSubAccounts(friendlyName, status, 50);
+        }
+
+        /// <summary>
+        /// List all subaccounts created for the authenticated account. Makes a GET request to the Account List resource.
+        /// </summary>
+        public virtual AccountResult ListSubAccounts(int count)
+        {
+            return ListSubAccounts(String.Empty, count);
         }
 
         /// <summary>
         /// List subaccounts that match the provided FriendlyName for the authenticated account. Makes a GET request to the Account List resource.
         /// </summary>
-        /// <param name="friendlyName">Name associated with this account</param>
-        public virtual AccountResult ListSubAccounts(string friendlyName, int? pageNumber, int? count)
+        /// <param name="friendlyName">Only return the Account resources with friendly names that exactly match this name</param>
+        public virtual AccountResult ListSubAccounts(string friendlyName, int count)
+        {
+            return ListSubAccounts(friendlyName, string.Empty, count);
+        }
+
+        /// <summary>
+        /// List subaccounts that match the provided FriendlyName for the authenticated account. Makes a GET request to the Account List resource.
+        /// </summary>
+        /// <param name="friendlyName">Only return the Account resources with friendly names that exactly match this name</param>
+        /// <param name="status">Only return Account resources with the given status. Can be closed, suspended or active</param>
+        public virtual AccountResult ListSubAccounts(string friendlyName, string status, int count)
         {
             var request = new RestRequest();
             request.Resource = "Accounts.json";
 
             if (friendlyName.HasValue()) { request.AddParameter("FriendlyName", friendlyName); }
+            if (friendlyName.HasValue()) { request.AddParameter("Status", status); }
 
             // Paging options
-            if (pageNumber.HasValue) request.AddParameter("Page", pageNumber.Value);
-            if (count.HasValue) request.AddParameter("PageSize", count.Value);
+            request.AddParameter("PageSize", count);
 
             return Execute<AccountResult>(request);
         }
-
-		/// <summary>
+        
+        /// <summary>
 		/// Creates a new subaccount under the authenticated account. Makes a POST request to the Account List resource.
 		/// </summary>
 		/// <param name="friendlyName">Name associated with this account for your own reference (can be empty string)</param>
